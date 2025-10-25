@@ -84,6 +84,15 @@ The Three Distinct Layers are:
     * This [Video](https://youtu.be/Nzv-tzU-UAw?si=JR7VXyc7VB5RB5IT&t=70) can help you to start if this is your first time using AWS (Just the Creation Part (Till 2:19)). 
 4. Navigate to S3 Bucket.   
     * ***Reference Image*** <img width="645" height="632" alt="image" src="https://github.com/user-attachments/assets/fa0fd9d9-5e6b-4f82-91d2-f8cd739b4f75" />
-
+5. Click **Create Bucket**
+    * Type your prefered Bucket Name, try to include a unique word which you only will be known as such we can make it little secure. 
+    * Uncheck all the **Block all Public Access** checkbox. 
+    * Click **Create Bucket**. 
+6. You can get dataset from this file or either from Kaggle using this [Titanic Dataset Link](https://www.kaggle.com/datasets/brendan45774/test-file).
+7. If using kaggle, unzip the folder and only upload the **.csv** file to the bucket following these steps: 
+    * Navigate to the newly created bucket. 
+    * Upload your Titanic.csv file. (I renamed the file from **tested** to **titanic**)
+    * Finally click **Upload** and in the next page click  **Close**.
+8. Now Follow the Snowflake Worksheet Folder for codes. 
 
 # Snowflake Editions.
