@@ -1,110 +1,88 @@
 # Full Details about Section 2: Snowflake Architecture
 
-# 9. Multi-Cluster Shared Disk
+# Multi-Cluster Shared Disk
 
 ## Traditional Architectures
-
-![Reference Image](image.png)
 
 1. Shared-Disk 
 2. Shared-Nothing
 
-## Shared-Disk
+### Shared-Disk 
+Storage is common to all the nodes 
 
-This has a central storage unit. Accessible from all compute nodes.
+### Advantages
+1. Simplicity
+2. Shared Storage (Data Management)
 
-## Shared-Nothing
+### Disadvantages
+1. Network Bottleneck
+2. Single Point of Failure
+3. Limited Scalability
 
-Each Node is Independent with own processor, memory and disk. 
+### Shared-Nothing
+Each node is independant and have it's own storage
 
-## How Snowflake Use the Benifits of these Architectures. 
+### Advantages
+1. Scalability
+2. High Availability 
 
-It is called **Multi Cluster Shared-Data** 
-1. Central Data Repository
-2. Massive Parallel Processing Compute Cluster, Each node stores a portion of the data locally. 
+### Disadvantages
+1. Expensive
+2. More Complex Management. 
 
-# 10. Three Distinct Layer of Snowflake
+## Snowflake Took What? 
+Snowflake took the Advantages of these 2 Architecture and made one.   
+This is also called as **Multi-Cluster Shared Architecture**.   
 
-1. DataBase Storage
-2. Compute Processing
-3. Cloud Service 
+***Took***:
+1. Central Data Repository. 
+2. Massive Parallel Processing Compute Cluster (MMP). - Also, Each Node stores a portion of the data locally. 
 
-## DataBase Storage Layer
+# Three Distinct Layer. 
 
-**Compressed Columnar Storage**
-Decoupled Compute & Storage 
-Blob Storage (AWS, Azure, GCP)
-Snowflake Manages all aspects about storage
-Optimized for OLAP / analytical purposes
+The Three Distinct Layers are: 
+1. Database Storage (Lower Layer)
+2. Compute Processing/ Query Processing (Middle Layer)
+3. Cloud Services (Top Layer)
 
-## Compute Processing Layer
-This is the Query Processing Layer and also called as **Muscle of the System**.
-Queries are processed using Virtual Warehouse
-Warehouse = MPP Compute Cluster (Multiple Compute Nodes)
-Provides Resources: **CPU, Memory, and Temporary Storage**
+## Database Storage.
 
-## Cloud Services Layer. 
-This is the **Brain of the System**. 
-Collection of Services to Coordinate & Manage the components.
+1. It is Decoupled from Compute. 
+2. It is called **Hybrid/Compressed Columnar Storage** 
+3. It is Called ***Compressed Columnar Storage**, because, the datas are compressed and are stored in block. 
+4. These blocks are stored in an external cloud provider. 
+5. Snowflake manages all the aspect about storage. 
+6. Optimized for OPAL/ Analytical purposes. 
 
-Takes care of: 
-1. Authentication. 
-2. Access Control. 
-3. Metadata Management. 
-4. Query Parsing and Optimization. 
-5. Infrastructure Management.
+## Compute Layer. 
 
-# 12. Snowflake Editions.
+1. Here is where the query's are computed or processed. 
+2. It have Virtual Warehouse or also called just "WareHouse".
+3. This is called the **Muscle of the System**.
+4. This Layer provides resources like: CPU, Memory, and Temporary Storage.
 
-1. Standard.
-2. Enterprise. 
-3. Business Critical. 
-4. Virtual Private. 
+## Cloud Services. 
 
-| **Standard** | **Enterprise** | **Business Critical** | **Virtual Private** | 
-|----------|------------|--------------------|-------------|
-|Complete DWH| All Standard Features| All Enterprise Feature| All Business Critical Features| 
-| Automatic Data Encryption| Multi-Cluster Warehouse| Additional Security features such as customer-managed encryption| Dedicated virtual servers and completely seperate Snowflake environment|
-| Broad Support for Standard and special data types| Time Travel up to 90 days| Support for data specific regulation| Dedicated metadata store Isolated from all other snowflake accounts
-| Time Travel up to 1 day| Materialized View| Database failover/failback (Disaster Recovery)|
-| Disaster Recovery for 7 days beyond time travel| Search Optimization|
-| Network Policies| Column-Level Security| 
-| Secure data Share| 24-hours early access to weekly new releases| 
-| Federated Authentication & SSO| 
-| Premier Support 24/7| 
+1. It is the top layer and it manages different services. 
+2. It is called the **Brain of the System**
+3. Collection of services to coordinate & manage the components. 
+4. Also, run on compute instances of cloud provider.
+5. Services Includes: 
+    * Authentication. 
+    * Access Control. 
+    * Query Parsing and Optimization. 
+    * Metadata Management. 
+    * Infrastructure Management. 
 
-# 13. Snowflake Pricing
+# Hands-On: First Data Loading. 
 
-## Types of Cost
-1. Compute
-2. Storage
-3. Data Transfer
+## You can follow these below steps to load a sample dataset into AWS. (Optional but recommended for first time learners (Either Snowflake or AWS))
 
-These both are decoupled, benifit are we can scale them independently. 
-Pay only for what we need. 
-Scalable and at affordable cloud price
-Pricing depending on the region/cloud provider
+1. Visit: https://aws.amazon.com/console/
+2. Click: **Sign in to Console**
+3. Either Create or Login to AWS Console
+    * This [Video](https://youtu.be/Nzv-tzU-UAw?si=JR7VXyc7VB5RB5IT&t=70) can help you to start if this is your first time using AWS (Just the Creation Part (Till 2:19)). 
+4. Navigate to S3 Bucket. 
+    * ![alt text](image-1.png)
 
-### Compute 
-1. (Active)Warehouse -> Standard Query Processing
-2. Colud Services -> Behind-the-scenes cloud service tasks (ONly charged if exceeds 10% of warehouse consumption)
-3. Serverless -> Search Optimization Snowpipe (Managed by snowflake)
-
-
-#### Active Warehouse
-* Charged for active warehouse per hour
-* Billed by second (minimum of 1 min)
-* Depending on the size of the warehouse
-Time/ Active Warehouse/ Size
-* Charged in Snowflake Credits
-
-##### Virtual Warehouse Sizes
-xs ⬡ 1  
-S ⬡⬡ 2  
-L ⬡⬡⬡⬡ 4  
-XL ⬡⬡⬡⬡⬡⬡⬡⬡ 8  
-2XL ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡ 16  
-3XL ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡ 32  
-4XL ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡.......⬡⬡⬡⬡⬡⬡ 64  
-5XL ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡.......⬡⬡⬡  256  
-6XL ⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡.......⬡ 512  
+# Snowflake Editions.
