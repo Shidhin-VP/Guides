@@ -82,7 +82,8 @@ The Three Distinct Layers are:
 2. Click: **Sign in to Console**
 3. Either Create or Login to AWS Console
     * This [Video](https://youtu.be/Nzv-tzU-UAw?si=JR7VXyc7VB5RB5IT&t=70) can help you to start if this is your first time using AWS (Just the Creation Part (Till 2:19)). 
-4. Navigate to S3 Bucket. 
-    * ![Reference Image](<img width="645" height="632" alt="image" src="https://github.com/user-attachments/assets/c2baef13-3c4d-4aeb-abd5-f98f7f095f87" />)
+4. Navigate to S3 Bucket.   
+    * ***Reference Image*** <img width="645" height="632" alt="image" src="https://github.com/user-attachments/assets/fa0fd9d9-5e6b-4f82-91d2-f8cd739b4f75" />
+
 
 # Snowflake Editions.
