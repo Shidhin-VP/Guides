@@ -30,7 +30,7 @@ graph TD;
 ```
 
 1. When we use GET command to download to our local machine. 
-##### Types
+#### Types
 
 ```mermaid
 graph TD; 
@@ -39,7 +39,7 @@ graph TD;
     Internal_Stage--> Named_Stage; 
 ```
 
-###### User Stage
+##### User Stage
 1. Every users have a User Stage. 
 2. This Cannot be Dropped or Modified. 
 3. Cannot be accessed by other Users. 
@@ -49,7 +49,7 @@ graph TD;
 7. Explicitly Remove files again. 
 8. Can refer use **@~**.
 
-###### Table Stage
+##### Table Stage
 1. Every table has a Table Stage. 
 2. It is tied to that particular table. 
 3. Cannot be modified or dropped. 
@@ -57,9 +57,25 @@ graph TD;
 5. Can only be accessed by one table.
 6. Can be reffered by **@%tableName**
 
-###### Named Stage. 
+##### Named Stage. 
 1. This is created by a user. 
 2. This is a **Snowflake Database Object**
 3. Everyone with privileges can access it. 
 4. Most Flexible. 
 5. Referred to with **@StageName**. 
+
+## External Stages. 
+1. Same like Named Stage from the Internal Stage. 
+2. But, here we specify the External Cloud Providers Location URL. 
+
+### External Stages have. 
+1. URL. 
+2. Stored Integration (Preferred Method) for storing the credientials. 
+3. File Format (Same like Named Stage) for specifying the File Formats and more. 
+
+### Additional Commands. 
+1. ```sql LIST @StageName/@~/@%tableName```
+2. ```sql COPY INTO Table FROM @StageName```
+3. ```sql COPY INTO @StageName FROM Table```
+4. ```sql SELECT * FROM @StageName```
+5. ```SELECT $1, $2, $3 FROM @stageName```
