@@ -74,8 +74,18 @@ graph TD;
 3. File Format (Same like Named Stage) for specifying the File Formats and more. 
 
 ### Additional Commands. 
-1. ```sql LIST @StageName/@~/@%tableName```
-2. ```sql COPY INTO Table FROM @StageName```
-3. ```sql COPY INTO @StageName FROM Table```
-4. ```sql SELECT * FROM @StageName```
-5. ```SELECT $1, $2, $3 FROM @stageName```
+1. ```sql
+    LIST @StageName/@~/@%tableName
+    ```
+2. ```sql 
+    COPY INTO Table FROM @StageName 
+    ```
+3. ```sql 
+    COPY INTO @StageName FROM Table
+    ```
+4. ```sql 
+    SELECT * FROM @StageName
+    ```
+5. ```sql
+    SELECT $1, $2, $3 FROM @stageName
+    ```
