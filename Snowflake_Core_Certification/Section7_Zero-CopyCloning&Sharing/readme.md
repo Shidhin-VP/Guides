@@ -24,7 +24,7 @@
 
 ### Why it is called Zero-Copy Cloning 
 
-1. we aer cloning a table 
+1. we are cloning a table 
     * Original 
     * Copy 
 2. This is a **Metadata Operation Only**
@@ -37,11 +37,11 @@
 9. **Privileges of the Child objects will be inherited but not for the database itself and also true for schema and done by the administrator**
 
 ### What Privileges are needed? 
-Table -> SELECT
-PIPE -> OWNER
-STREAM -> OWNER
-TASK -> OWNER
-ALL OTHER OBJECTS -> USAGE
+* Table -> SELECT
+* PIPE -> OWNER
+* STREAM -> OWNER
+* TASK -> OWNER
+* ALL OTHER OBJECTS -> USAGE
 
 ### Additional Considerations. 
 1. Load history meta data is not copied
