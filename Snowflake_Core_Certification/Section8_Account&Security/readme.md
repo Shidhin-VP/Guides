@@ -200,7 +200,7 @@ graph TD;
 3. This is provided by **Federated Environment**
     ```mermaid
     graph TD;
-        Federated_Environment-->Service_Provide_Snowflake_;
+        Federated_Environment-->Service_Provide_Snowflake;
         Federated_Environment-->External_Identity_Provider;
         External_Identity_Provider-->Maintaining_Credentials;
         External_Identity_Provider-->Authenticate_Users;
@@ -291,3 +291,127 @@ graph TD;
     ```sql
     ALTER TABLE MY_TABLE ADD ROW POLICY MY_POLICY ON (COLUMN1);
     ```
+
+## Network Policies. 
+1. Allow to restrict access to account based on User IP Address. 
+2. This is a Standard Edition. 
+3. We can define **Allowed IP Address** and **Blocked IP Addresses**
+4. Blocked IP Address will have the Priority. 
+5. We can also use **N/A** and only the IP that are in the **Allowed IP Addresses** will be having access. 
+
+### Create Network Policy 
+1. We can use SecurityAdmin Role becuase this has **Global Create Network Policy** Privileges. 
+2. Create Network Policy. 
+    ```sql
+    CREATE NETWORK POLICY MY_NETWORK_POLICY
+    ALLOWED_IP_LIST=('192.168.195','192.168.1.113')
+    BLOCKED_IP_LIST=('192.168.195');
+    ```
+3. Apply Network Policy
+    ```sql
+    ALTER ACCOUNT SET NETWORK POLICY = MY_NETWORK_POLICY;
+    ```
+4. We can apply this on the User level but for that we need additional privileges of **Ownership** of users & network policy. 
+    ```sql
+    ALTER USER SET NETWORK_POLICY=MY_NETWORK_POLICY;
+    ```
+
+## Data Encryption
+1. In Snowflake all data at all time are encrypted. 
+2. Encrypted at **Rest** and also in **Transit**
+
+### Encryption at REST. 
+1. Has: Tables, INternal Stages. (Everything that has data which is managed by snowflake)
+2. **AES 256-bit Encryption** and Snowflaked Managed. 
+3. **Key Rotation every 30 Days**. 
+4. Old keys will be destroyed. 
+5. For Enterprise Edition:
+    * If enabled we can **Re-Keying every year** Key Rotation. 
+    * This will also change the existing key for all of the tables.
+
+### Data in Transit
+1. This is true for all of the connectors, dirvers, interface 
+2. Snowflake uses **TLS1.2** so we can have **End-to-End Encryption**
+3. Flow for exampel when we **PUT** a file from our local machine 
+    ```mermaid 
+    graph TD;
+        PUT-->Encrypted_on_User-Machine;
+        Encrypted_on_User-Machine-->Internal_Stage;
+        Internal_Stage-->Encrypted_in_the_stage;
+        Encrypted_in_the_stage-->Encrypted_in_Transit;
+        Encrypted_in_Transit-->Encrypted_at_rest;
+    ```
+4. If it's an **External Stage**, which is not managed by snowflake, we can use **Client-Side Encryption**
+
+### Tri-Secret Secure
+1. Enables Customer to use Own Keys
+2. This is a **Business Critical Edition**
+
+#### Workflow
+1. There will be a **Customer-Managed Key**, this usually be based on the cloud provider. 
+2. And also **Snowflake-Managed Key** which will give **Master Key** or **Composite Key**
+
+    ```mermaid 
+    graph TD;
+        Customer_Managed_Key-->Snowflake_Managed_Key;
+        Snowflake_Managed_key-->Master_Key;
+    ```
+3. This Feature can only be **Enabled** by reaching out to **Snowflake Support**
+4. Need Management and Responsibility from **Customer Side**
+
+## Account Usage & Information Schema. 
+1. We can used to **Query Object Metadata and Historical Usage Data**
+### Account Usage Schema. 
+1. Snowflake Database which is a **Shared Databased** availabe to all account. 
+2. If we have **Role AccountAdmin** we can wee all of the data and can **View Everything**
+3. **Object Metadata** -> **Columns**
+4. **Historical Usage Data** -> **Copy_Hisotry**
+    * Long Term Historical Usage Schema. 
+5. Not Real-Time it has **Latency** of **45min - 3 Hours**
+6. Data Retention here is Long Term: **365 Days**. 
+7. Includes Dropped Objects
+
+### Information Schema 
+1. Acutomatically Created. 
+2. Read-Only 
+3. Output Depends on Privileges 
+4. Parent DB + account-level 
+
+#### Points to Remember.
+1. No Latency. 
+2. Retention Period is from **7 Days - 6 Months**
+
+
+## Release Process
+1. How are Releases Deployed? 
+    * On a Weekly Basis. 
+    * Weekly New Releases
+    * A Seamless Process without any downtime, **NO Downtime**
+
+### Types of Releases
+1. Full Releases
+2. Patch Releases
+
+#### Full Releases
+
+    ```mermaid
+    graph TD;
+        Full_Releases-->New_Features;
+        Full_Releases-->Enhancement_or_Updates;
+        Full_Releases-->Bug_Fixes;
+        Full_Releases-->Behavior_Changes;
+        Behavior_Changes-->Monthly_Releases;
+        Behavior_Changes-->Impact_on_Workload;
+    ```
+#### Patch Releases. 
+1. This only contain the bug Fixes
+
+
+### Three Stage Approach. 
+1. Helps to Monitor and react to Issues. 
+2. Day 1
+    * **Early Access** -> Designated Enterprise (or Higher) accounts (Enterprise Editoin)
+3. Day 1 or Day 2
+    * **Regular Access** -> Standard Account
+4. Day 2
+    * **Final Access** -> Enterprise(or Higher) Accounts.
