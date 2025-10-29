@@ -354,7 +354,7 @@ graph TD;
     ```mermaid 
     graph TD;
         Customer_Managed_Key-->Snowflake_Managed_Key;
-        Snowflake_Managed_key-->Master_Key;
+        Snowflake_Managed_Key-->Master_Key;
     ```
 3. This Feature can only be **Enabled** by reaching out to **Snowflake Support**
 4. Need Management and Responsibility from **Customer Side**
@@ -393,16 +393,13 @@ graph TD;
 2. Patch Releases
 
 #### Full Releases
-
-    ```mermaid
-    graph TD;
-        Full_Releases-->New_Features;
-        Full_Releases-->Enhancement_or_Updates;
-        Full_Releases-->Bug_Fixes;
-        Full_Releases-->Behavior_Changes;
-        Behavior_Changes-->Monthly_Releases;
-        Behavior_Changes-->Impact_on_Workload;
-    ```
+```mermaid
+graph TD;
+    Full_Releases-->New_Features;
+    Full_Releases-->Enhancement_or_Updates;        Full_Releases-->Bug_Fixes;
+    Full_Releases-->Behavior_Changes;
+    Behavior_Changes-->Monthly_Releases;        Behavior_Changes-->Impact_on_Workload;
+```
 #### Patch Releases. 
 1. This only contain the bug Fixes
 
