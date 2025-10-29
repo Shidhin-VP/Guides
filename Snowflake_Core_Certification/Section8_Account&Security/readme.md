@@ -395,10 +395,13 @@ graph TD;
 #### Full Releases
 ```mermaid
 graph TD;
-    Full_Releases-->New_Features;
-    Full_Releases-->Enhancement_or_Updates;        Full_Releases-->Bug_Fixes;
-    Full_Releases-->Behavior_Changes;
-    Behavior_Changes-->Monthly_Releases;        Behavior_Changes-->Impact_on_Workload;
+    Full_Releases --> New_Features;
+    Full_Releases --> Enhancement_or_Updates;
+    Full_Releases --> Bug_Fixes;
+    Full_Releases --> Behavior_Changes;
+    Behavior_Changes --> Monthly_Releases;
+    Behavior_Changes --> Impact_on_Workload;
+
 ```
 #### Patch Releases. 
 1. This only contain the bug Fixes
