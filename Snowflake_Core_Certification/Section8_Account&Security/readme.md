@@ -200,7 +200,7 @@ graph TD;
 3. This is provided by **Federated Environment**
     ```mermaid
     graph TD;
-        Federated_Environment-->Service_Provide(Snowflake);
+        Federated_Environment-->Service_Provide_Snowflake_;
         Federated_Environment-->External_Identity_Provider;
         External_Identity_Provider-->Maintaining_Credentials;
         External_Identity_Provider-->Authenticate_Users;
