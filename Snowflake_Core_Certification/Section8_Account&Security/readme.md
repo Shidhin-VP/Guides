@@ -48,7 +48,7 @@ graph TD;
     SysAdmin-->CustomeRoles2;    
 ```
 
-* When we are grant privileges to a child object we need to grant to the User object. 
+* When we are grant privileges to a child object we need to grant privileges to the parent object. 
 
 * Every Object is owned by one single owner **Ownership Privileges**
 * Ownership can be transferred
@@ -81,7 +81,7 @@ graph TD;
     * Modify account-level parameters. 
     * Mange billing & resource monitors. 
 3. SECRITYADMIN. 
-    * This role can** Manage any object grant globally**. 
+    * This role can **Manage any object grant globally**. 
     * Manages Grant Privileges. 
     * Create, Monitor, and mange users and roles. 
     * inherites **UserAdmin** Privileges. 
@@ -117,10 +117,10 @@ graph TD;
 
 #### Global Priviliges 
 |Global Priviliges|DESC|
-|-----------------|
+|-----------------|----|
 |Create Share| Enables Provider to create a share. |
 |Import Share| Enables to create a database. |
-|Apply Masking Policy|Enables to set masking policies. |
+|Apply Masking Policy|Enables to set masking policies.|
 
 
 #### Specific Priviliges on Different Object Types. 
