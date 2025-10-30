@@ -97,7 +97,7 @@ graph TD;
 2. This also contains metadata of Objects. 
 3. This includes also Properties for **Query Optimization and Processing**
 4. Some pre-calculated Statistics are stored 
-    for table for example: 
+    * for table for example: 
         * Can be a range of values in different **Micro-Partitions** , **Max/Min** 
         * Count Rows, Count Distinct values.
         * Without using virtual warehouse
@@ -147,12 +147,12 @@ graph TD;
 1. Average depth of the overlapping micro-partitions for specif column. 
 2. In howmany Micro-Partions value occurs. 
 3. **Lower Average Depth** We clusterd Table and fewer **Overlapping Micro Partition more well clusterd Table**
-4. Idea(Constant Stage/Partition):    
+4. Ideal(Constant Stage/Partition):    
     * No Overlapping Micro Partion
     * Average Depth: 1. 
-    * If this number is **High** then this would be really Good.
+    * If Overlapping Micro Partion number is **High** then this would be really Good.
 
-1. **By Improving Clustering Key we want to achieve the Idea State**
+1. **By Improving Clustering Key we want to achieve the Ideal State**
 2. Similar rows in the similar Micro-Partitions. 
 
 
@@ -220,3 +220,96 @@ Query Performance <--> Cost
     * Returns a Json with Information
 2. **SYSTEM$CLUSTERING_DEPTH('TABLENAME','COLUMNS')**
     * Returns a depth value for the columns
+
+## Search Optimization Service. 
+1. This is an Enterprise Edition. 
+2. Can improve performance of certain **Types** of **Lookup** and **Analytical Queries**. 
+3. This uses **Many *Predicates* for Filtering**
+4. This Features works by adding a **Search Access Path**  to a table, like this we can benifit for a better performance for very **Specefic Types of Queries**
+5. This Adds Search Optimization to Column
+
+### Benificial Quries
+
+|Beneficial Queries| DESC|
+|-------------------|-----|
+|Selective Point Look-Up| These are Queries that have a Filtering which Returns on one or very few rows|
+|Equality Predicates(=) or IN Predicates|eg. Where Amount =1|
+|Substring and regualr Expression searches| eg. LIKE, or ILIKE, VARIANT column| 
+| Selective Geospatial Functions| with GeoGraphy values|
+
+
+1. These Features are mainted automatically by **Snowflake** for a different **Column** or Different **Table**
+2. Serverless Features and consume Credits. (Serverless Cost)
+3. Also, Additional Storage Needed for **Maintaining the *Search Access Path***
+
+#### Priviliges we need. 
+1. Ownership Priviliges on the Table 
+                or 
+2. ADD SCHEMA OPTIMIZATION Privileges on Schema Level
+
+### Refering Commands. 
+```sql
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION; 
+ALTER TABLE MY_TABLE DROP SEARCH OPTIMIZATION;
+```
+                    **Also**
+```sql
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION ON EQUALITY(*);
+ALTER TABLE MY_TABLE ADD SEARCH OPTIMIZATION ON GEO(GEO_COLUMN);
+```
+
+## Materialized View
+
+1. Method to handle performance issues of view. 
+2. This is an **Enterprise** Edition. 
+3. Consider: 
+    1. We run a Query Frequently, to make things more convineat and easier we dicided to create a **View** that is just **executing** and **Storing** these **Queries**. So then we need to query the view and get the results. 
+    2. Problem is, if the Query is more compute-intensive, it will cost over and over for compute and also not so great in Performance. 
+    3. Solution is **Materialized View**, This is also a **View** but **Similar to a *Real Table***
+    4. Because the result of these view are Stored Physically, so it is **Pre-Computed** and **Stored Physically** Like a real table. 
+    5. This can **Boost the Performance** Which can specially **Sufficiently Complex** so we get and **Additional benifit** because of this Pre-Computation and physical storage of this pre-computed data. 
+
+### How is it different to a real table? 
+1. The Underlying data that is coming from the base table can of course change and this will then be automatically also updated periodically by snowflake. 
+2. **Serverless Compute** and **Serverless Costs**
+3. Data is stored physically so it can also cost **Additional Storage Consumption**
+4. 
+```sql
+SELECT * FROM TABLE(INFORMATION_SCHEMA.MATERIALIZED_VIEW_REFRESH_HISTORY());
+```
+
+### Limitations. 
+1. ONly Query from 1 Table 
+    * Espically we cannot use **JOINS** even self-joins are not allowed in **Materialized View**
+2. No Underlying Views can be used, We are only suppose to Use **Real Base Table** and this is also true for Materialized view.
+    * But we can make a Materialized View on an **External Tables.**
+3. We cannot Use: 
+    1. Window Functions. 
+    2. UDFs.
+    3. HAVING CLAUSE.
+    4. ORDERBY
+    5. And also a few Aggregation functions can not also be used. 
+
+### Pause and Resume Materialized View. 
+1. We can pause and resume Materialized view easily as other objects. 
+
+```sql
+CREATE MATERIALIZED VIEW V1 AS SELECT * FROM TABLE 1 WHERE C1=200;
+ALTER MATERIALIZED VIEW V1 SUSPEND; 
+ALTER MATERIALIZED VIEW V1 RESUME;
+```
+
+2. Suspending the Materialized view will only stop the **Maintenance** of this view, so it will not cause any credit consumption and  we cannot use the materialized view until RESUME; 
+
+3. This will mostly not save cost, but it will usually just delay it, becuase when we resume it again, then there has to be some update, some maintenance that has to be done, so this is usually just more delaying the cost instead of saving them. 
+
+4. We can also drop them when we don't need it anymore. 
+
+
+## Warehouse Considerations. 
+|Considerations|DESC|
+|--------------|-----|
+|Resizing|Warehouses can be resized even when query is runnin gor when suspended. Impact only **future queries**, not on the running one.|
+|Scale Up Vs. Scale Out| **Scale Up: ** When the Queries are more Complex, **Scale Out:** More users (More Queries)| 
+|Dedicated Warehouse| Isolated workload of specific user,Different type of workload => Different Warehouse, also enables **Auto-Suspend** and **Auto-Resume** (Available for all warehouse)|
+
