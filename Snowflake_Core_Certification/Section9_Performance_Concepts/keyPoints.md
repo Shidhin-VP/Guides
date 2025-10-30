@@ -16,8 +16,7 @@
             * Byte Scanned.
             * Scanned from Cache. 
             * Data Spilling. 
-3. Data Spilling. 
-    * 
+3. Data Spilling.  
     ```mermaid
         graph TD;
             Query_Processing-->Local_Storage_Spill; 
@@ -39,7 +38,7 @@
         * Saves the Result of the Query of User Processed. 
         * Syntax, Metadata, Updation and more should not be Processed. 
         * Cannot contain UDFs or External Functions. 
-        * Can be DISABLED using : **USE_CACHED_RESULT ** parameter.
+        * Can be DISABLED using : **USE_CACHED_RESULT** parameter.
         * Retention Period: 
             * If Query is not Queried again, it will **Purged** after **24 Hours**
             * If Query is Queried again and again, the data retention Period will be up to **31 Days**
