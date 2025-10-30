@@ -21,7 +21,7 @@
         ```mermaid
         graph TD;
             Query_Processing-->Local_Storage_Spill; 
-            Local_Storage_Spill-->Remote_Cloud_Storage_Spill;
+            Local_Storage_Spill-->Remote_Cloud_Storage;
         ```
     * Memory is the Key, if Spilled, will reduce the performance. 
 4. How to avoid Spilling. 
