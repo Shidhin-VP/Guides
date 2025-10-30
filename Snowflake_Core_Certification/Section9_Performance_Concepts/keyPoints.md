@@ -18,11 +18,11 @@
             * Data Spilling. 
 3. Data Spilling. 
     * 
-        ```mermaid
+    ```mermaid
         graph TD;
             Query_Processing-->Local_Storage_Spill; 
             Local_Storage_Spill-->Remote_Cloud_Storage;
-        ```
+    ```
     * Memory is the Key, if Spilled, will reduce the performance. 
 4. How to avoid Spilling. 
     * Reduce Parallel Data Processing. 
