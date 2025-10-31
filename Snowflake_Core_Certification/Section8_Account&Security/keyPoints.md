@@ -205,7 +205,8 @@ graph TD;
         * Bug Fixes
         * New Features
         * Enhancements or Updates. 
-        * Behaviour Changes
+        * Behaviour
+         Changes
             * This affect Workflow and Code 
             * Monthly Release
     * Patches
