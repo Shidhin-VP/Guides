@@ -1,0 +1,1 @@
+# A Guide or Memory Refresher to gain Snowflake Snowpro Core Certification
