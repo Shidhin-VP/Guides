@@ -16,7 +16,7 @@
         ```
     * What those importation does. 
       * We need FASTAPI to create the fastapi instance, and this is the foundation
-      * <code style="color: Cyan">HTTPException</code> from the FastAPI help us to raise HTTPExceptions (An Error Response)
-      * <code style='color: Cyan'>Request</code> let us access the incoming HTTP request itself, it's headers, URL, client information, body and other request details. 
-      * <code style="color: Cyan">Status</code> is a collection of named HTTP status-code constants.
+      * $${\color{orange}HTTPException}$$ from the FastAPI help us to raise HTTPExceptions (An Error Response)
+      * $${\color{orange}Request}$$ let us access the incoming HTTP request itself, it's headers, URL, client information, body and other request details. 
+      * $${\color{orange}Status}$$ is a collection of named HTTP status-code constants.
       * $${\color{orange}RequestValidationError}$$ helps us to validate wrong inputs/types from the client side
