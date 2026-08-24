@@ -20,3 +20,7 @@
       * $${\color{orange}Request}$$ let us access the incoming HTTP request itself, it's headers, URL, client information, body and other request details. 
       * $${\color{orange}Status}$$ is a collection of named HTTP status-code constants.
       * $${\color{orange}RequestValidationError}$$ helps us to validate wrong inputs/types from the client side
+      * $${\color{orange}JSONResponse}$$ helps us to return a custom and explicit JSON response from the FASTAPI api
+      * $${\color{orange}StaticFiles}$$ helps us to serve static files such as Images, CSS Files, JavaScript Files, HTML Files etc. This can be mainly used to when we use Templates
+      * $${\color{orange}Jinja2Templates}$$ is used to render HTML pages using Jinja2templates, this also takes $${\color{orange}Request}$$ as a required input because the template can access the request related information, including URL generation.
+      * $${\color{orange}HTTPException \space from \space \color{gold}Starlette}$$ can be used to defined unmanaged exceptions
