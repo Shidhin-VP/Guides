@@ -11,7 +11,7 @@
 
      * ```python
         from typing import Annotated
-        from fastapi import FASTAPI, HTTPException, Request, status, Depends
+        from fastapi import FASTAPI, HTTPException, Request, status, Depends, Query
         from fastapi.exception import RequestValidationError
         from fastapi.response import JSONResponse # Can be removed after instalking request_validation_exception_handler
         from fastapi.staticfiles import StaticFiles
@@ -200,4 +200,77 @@
 2. [3:37:35 SYNC Vs ASYNC](https://youtu.be/iukOehU5aF4?si=kqF2ADLc0TTHsSGL&t=13055)
    * Async -> Allows to handle multiple task concurrently (MC) I/O bound task
    * Sync -> Finish full first then move (Subway)
+
+3. [4:08:58 Routers](https://youtu.be/iukOehU5aF4?si=n79gjpNnOWkoPsGG&t=14938)
+   * Organize FastAPI App with Routers
+4. [7:04:13 Pagination - Loading More Data with Query Parameters](https://www.youtube.com/watch?v=iukOehU5aF4&t=25453s)
+   * Limit data in the backend rather than frontend
+   * class for New Pagination Response
    * 
+    ```python
+          class PaginatedREsponse(BaseModel): 
+            posts: list[PostResponse]
+            total:int
+            skip:int
+            limit:int
+            has_more:bool
+      ```
+   * **Use Orderby in the backend**
+5. [10:11:44 Testing the API - Pytest, Fixtures, and Mocking External Services](https://www.youtube.com/watch?v=iukOehU5aF4&t=36704s)
+   * Test Dependices:  
+       1. uv add --dev pytest (As a dev Dependices)
+       2. uv add --dev "moto[s3]" # Library that Mock aws services
+   * Create a new dir: **tests** and create new file: **__init__.py** and create **conftest.py**, **test_posts.py** (File Based Strucute), and **test_users.py** (File Based Structure). 
+   * First Sync Approach: 
+     * 
+        ```python
+        from fastapi.testclient import TestClient
+        demo_app=FastAPI()
+        @demo_app.get("/")
+        def demo_home(): 
+          return {"Message":"Hello"}
+        client=TestClient(demo_app)
+        def test_homepage():
+          response=client.get("/")
+          assert response.status_code==200 #Pytest capture if the assert failed or not
+        ```
+     * ```uv run pytest tests/test_demo.py -v``` # -v is Verbos
+   * **conftest.py** Pytest recognize automatically, this is where we put fixtures, and other shared setup that might needed to be available for other files. 
+   * conftest.py: 
+      1. 
+        ```python
+        import os 
+        from collections.abc import AsyncGenerator
+        os.environ["DATABASE_URL"]=(
+          "postgresql+psycopg://bloguser:blogpass@localhost/test_blog"
+        )
+        os.environ["S3_BUCKET_NAME"]="test-bucket"
+        os.environ["SECRET_KEY"]=""
+        import boto3
+        import pytest
+        from httpx import ASGITransport, AsyncClient
+        from moto import mock_aws
+        from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+        from sqlalchemy.pool. import NullPool
+
+        from database import Base, get_db
+        from main import app 
+
+        pytest_plugins=["anyio"] #Putting this in conftest is command and good, and this plugin will give us pytest IO decorator, which tells to run it on an Event Loop 
+
+        #Fixture 
+        @pytest.fixture(scope="session") # Runs Once for one entire test session, rather than once per test. 
+        def anyio_backend():
+          return "asyncio"
+
+        @pytest.fixture(scope="session")
+        def test_engine():
+          engine=create_async_engine(
+            os.environ["DATABASE_URL"]
+            poolclass=NullPool, # Disable Connection Pooling enterly
+          )
+          return engine
+        ```
+      2. ![alt text](image.png)
+      3. ![alt text](image-1.png)
+   * a
