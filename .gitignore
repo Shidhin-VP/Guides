@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Don't touch Flutter Projects
+!collections/flutter 
+flutter/*
+
 # Distribution / packaging
 .Python
 build/
