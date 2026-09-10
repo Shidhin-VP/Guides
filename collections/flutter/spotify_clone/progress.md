@@ -80,3 +80,10 @@
    10. Moreover, after adding the container, on the Elevated widget's ```ElevatedButton.styleFrom()``` add backgroundColor and shadowColor to transparent color.
    11. Learned to add RichText to the page, for RichText it is understood that we need to create a TextSpan() for the text widget and then inside the TextSpan() we need to create a children where it contains a lot of other TextSpan to seperate text styles.
    12. Learned to wrape Column (Not the Padding which wrapped the Column) but only the Column with Form() so that we can add ```GlobalKey<FormState>()``` to the form so we can validate with required logic easily.
+
+## <mark>As of (09/03/2026)</mark>
+
+1. Learned to create a ```page``` folder inside the ```view``` which was missed the last class/section.
+2. inside the page signup page have been moved and also login.dart page have been added.
+3. Learned that I can pass function to other fuction for onTap features using type ```voidCallback```.
+4. Now learning about backend/service building ways
