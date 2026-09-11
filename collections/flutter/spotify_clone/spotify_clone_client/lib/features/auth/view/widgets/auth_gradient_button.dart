@@ -3,7 +3,8 @@ import 'package:spotify_clone_client/core/theme/app_pallete.dart';
 
 class AuthGradientButton extends StatelessWidget {
   final String buttonText;
-  const AuthGradientButton({super.key, required this.buttonText});
+  final VoidCallback onTap;
+  const AuthGradientButton({super.key,required this.onTap, required this.buttonText});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class AuthGradientButton extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ElevatedButton.styleFrom(
           fixedSize: Size(395, 55),
           backgroundColor: AppPallete.transparentColor,

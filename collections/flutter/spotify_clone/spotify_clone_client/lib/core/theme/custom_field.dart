@@ -2,10 +2,27 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-  const CustomTextField({super.key, required this.hintText});
+  final TextEditingController controller;
+  final bool isObscure;
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.isObscure=false
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(decoration: InputDecoration(hintText: hintText));
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(hintText: hintText),
+      obscureText: isObscure,
+      validator: (value) {
+        if (controller.text.isEmpty) {
+          return "Please Enter $hintText";
+        }
+        return null;
+      },
+    );
   }
 }
