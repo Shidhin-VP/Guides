@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotify_clone_client/core/theme/custom_field.dart';
+import 'package:spotify_clone_client/core/widgets/custom_field.dart';
 import 'package:spotify_clone_client/core/utils/general_app_status.dart';
 import 'package:spotify_clone_client/core/widgets/loader.dart';
 import 'package:spotify_clone_client/features/auth/view/pages/signup.dart';
@@ -8,6 +8,7 @@ import 'package:spotify_clone_client/features/auth/view/widgets/auth_gradient_bu
 import 'package:spotify_clone_client/features/auth/view/widgets/auth_rich_text_nav.dart';
 import 'package:spotify_clone_client/features/auth/view/widgets/auth_title_text.dart';
 import 'package:spotify_clone_client/features/auth/viewmodel/auth_view_model.dart';
+import 'package:spotify_clone_client/features/home/view/pages/home_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -31,13 +32,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final isLoading = ref.watch(
+      authViewModelProvider.select((val) => val?.isLoading == true),
+    );
     ref.listen(authViewModelProvider, (_, next) {
       next?.when(
         data: (data) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (_) => false,
+          );
           showAppStatus(
             context,
-            message: "Login Success!, Welcome ${data.name}",
+            message: "Login Success!, Welcome Back ${data.name}",
           );
         },
         error: (error, st) {

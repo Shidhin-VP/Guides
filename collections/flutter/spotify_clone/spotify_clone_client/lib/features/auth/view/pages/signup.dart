@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotify_clone_client/core/utils/general_app_status.dart';
-import 'package:spotify_clone_client/core/theme/custom_field.dart';
+import 'package:spotify_clone_client/core/widgets/custom_field.dart';
 import 'package:spotify_clone_client/core/widgets/loader.dart';
 import 'package:spotify_clone_client/features/auth/view/pages/login.dart';
 import 'package:spotify_clone_client/features/auth/view/widgets/auth_gradient_button.dart';
@@ -34,7 +34,9 @@ class _SignUpState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    bool isLoading = ref.watch(
+      authViewModelProvider.select((val) => val?.isLoading == true),
+    );
     ref.listen(authViewModelProvider, (_, next) {
       next?.when(
         data: (data) {

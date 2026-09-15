@@ -32,7 +32,7 @@ class UserModel {
       name: map['name'] ?? '',
       email: map['email'] as String,
       password: map['password'] ?? '',
-      token: map['token'] ?? '',
+      token: map['jwt_token'] ?? '',
       finalMessage: map['_final_message'] ?? '',
     );
   }
