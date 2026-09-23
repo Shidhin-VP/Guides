@@ -39,6 +39,6 @@ class UserModel {
 
   @override
   String toString() {
-    return "UserModel(name: $name, email: $email, final_message: $finalMessage)";
+    return "UserModel(name: $name, email: $email, token: $token)";
   }
 }

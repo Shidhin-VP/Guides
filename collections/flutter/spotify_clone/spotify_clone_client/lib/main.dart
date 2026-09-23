@@ -4,6 +4,7 @@ import 'package:spotify_clone_client/core/providers/current_user_notifier.dart';
 import 'package:spotify_clone_client/core/theme/app_theme.dart';
 import 'package:spotify_clone_client/features/auth/view/pages/signup.dart';
 import 'package:spotify_clone_client/features/auth/viewmodel/auth_view_model.dart';
+import 'package:spotify_clone_client/features/home/view/pages/home_page.dart';
 import 'package:spotify_clone_client/features/home/view/pages/upload_song_page.dart';
 
 void main() async {
@@ -20,6 +21,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserProvider);
+    print("Current User: $currentUser");
     return MaterialApp(
       theme: AppTheme.darkThemeMode,
       home: currentUser != null ? UploadSongPage() : SignUp(),

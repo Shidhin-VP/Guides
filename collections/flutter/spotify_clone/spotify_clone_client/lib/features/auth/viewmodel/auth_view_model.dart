@@ -50,7 +50,6 @@ class AuthViewModel extends _$AuthViewModel {
   }
 
   Future<UserModel?> validateAndGetToken() async {
-    state = AsyncLoading();
     final String? token = _authLocalRepository.getToken();
     if (token != null && token.isNotEmpty) {
       final res = await _authRemoteRepository.getTokenValidatedData(token);

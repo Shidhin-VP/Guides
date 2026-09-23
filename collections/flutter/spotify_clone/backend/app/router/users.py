@@ -1,11 +1,9 @@
-from typing import Annotated, Any
-# import uuid
+from typing import Annotated, Any #noqa
 
-from fastapi import APIRouter, Depends, HTTPException, status 
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 import bcrypt
-# import jwt
 
 from app.schemas.users_schema import (
     UserCreate,
@@ -13,10 +11,10 @@ from app.schemas.users_schema import (
     UserLogin,
     UserLoginResponse,
 )
-from app.database import get_db
-# from app.config.settings import settings
+from app.ini.database import get_db
+
 from app.middleware.auth_middleware import auth_middleware
-import models
+from app import models
 
 router = APIRouter()
 
@@ -66,7 +64,7 @@ def login_user(user: UserLogin, db: Annotated[Session, Depends(get_db)]):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Password or Email Not Correct",
         )
-    return UserLoginResponse(email=user.email, name=user_db.name)
+    return UserLoginResponse(email=user.email, name=user_db.name, id=str(user_db.id))
 
 
 @router.get(
@@ -76,14 +74,16 @@ def login_user(user: UserLogin, db: Annotated[Session, Depends(get_db)]):
 )
 def get_user_data(
     db: Annotated[Session, Depends(get_db)],
-    auth_mw:Annotated[dict[str, Any], Depends(auth_middleware)],
+    auth_mw: Annotated[dict[str, Any], Depends(auth_middleware)],
 ):
-    email_address:str=auth_mw['email']
+    id: str = auth_mw["id"]
     # token:str=auth_mw['token']
-    user = db.execute(select(models.User).where(models.User.email == email_address))
-    validate_email = user.scalars().first()
-    if not validate_email:
+    user = db.execute(select(models.User).where(models.User.id == id))
+    validate_id = user.scalars().first()
+    if not validate_id:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="No User Found"
         )
-    return UserLoginResponse(email=validate_email.email, name=validate_email.name)
+    return UserLoginResponse(
+        email=validate_id.email, name=validate_id.name, id=str(validate_id.id)
+    )

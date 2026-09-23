@@ -27,6 +27,7 @@ class UserLogin(UserBase):
 
 class UserLoginResponse(UserBase):
     name: str = Field(min_length=1, max_length=50)
+    id: str = Field(min_length=1, max_length=80)
 
     # @property # Needs to be first even before computed_field
     @computed_field
@@ -35,8 +36,8 @@ class UserLoginResponse(UserBase):
 
     @computed_field
     def jwt_token(self) -> str:
-        return jwt.encode(payload={"email": self.email}, key=settings.jwt_private_key)  # type:ignore
+        return jwt.encode(payload={"id": self.id}, key=settings.jwt_private_key)  # type:ignore
 
 
-class ValidateToken(BaseModel): 
-    token:str 
+class ValidateToken(BaseModel):
+    token: str

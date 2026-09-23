@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import delete
 from sqlalchemy.orm import Session
 
-from app.database import get_db
+from app.ini.database import get_db
 from app.models import User
 
 

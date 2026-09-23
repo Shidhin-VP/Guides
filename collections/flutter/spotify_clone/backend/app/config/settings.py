@@ -7,6 +7,11 @@ class Settings(BaseSettings):
     )
     database_url: str
     jwt_private_key:str
+    aws_access_key:str 
+    aws_secret_key:str
+    aws_region_name:str
+    aws_bucket_name:str
+    aws_public_bucket_url:str
 
 
 settings = Settings()  # type:ignore
