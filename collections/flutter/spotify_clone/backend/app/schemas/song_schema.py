@@ -4,7 +4,7 @@ from uuid import UUID
 
 class SongBase(BaseModel):
     # song_url: str = Field(min_length=1)
-    artist: str = Field(min_length=1)
+    artist_name: str = Field(min_length=1)
     song_name: str = Field(min_length=1)
     color: str 
 

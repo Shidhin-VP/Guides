@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spotify_clone_client/core/theme/app_pallete.dart';
 import 'package:spotify_clone_client/features/home/view/pages/library_page.dart';
 import 'package:spotify_clone_client/features/home/view/pages/song_page.dart';
+import 'package:spotify_clone_client/features/home/view/pages/upload_song_page.dart';
+import 'package:spotify_clone_client/features/home/view/widgets/music_slab.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const new({super.key});
@@ -13,14 +15,17 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   int selectedIndex = 0;
-  final pages=[
-    SongPage(),
-    LibraryPage()
-  ];
+  final pages = [SongPage(), LibraryPage(), UploadSongPage()];
   @override
   Widget build(BuildContext context) {
+    print("Selected $selectedIndex");
     return Scaffold(
-      body: pages[selectedIndex],
+      body: Stack(
+        children: [
+          pages[selectedIndex],
+          const Positioned(bottom: 0,child: MusicSlab())
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (value) {
@@ -49,9 +54,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             label: "Library",
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.upload),
+            label: "Upload Song",
+          ),
         ],
       ),
     );
-    ;
   }
 }

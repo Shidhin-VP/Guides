@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +12,12 @@ class AudioWave extends StatefulWidget {
 }
 
 class _AudioWaveState extends State<AudioWave> {
-  final PlayerController playerController = PlayerController();
+  late final PlayerController playerController;
 
   @override
   void initState() {
     super.initState();
+    playerController = PlayerController();
     initPlayerController();
   }
 
@@ -27,7 +27,7 @@ class _AudioWaveState extends State<AudioWave> {
     super.dispose();
   }
 
-  void initPlayerController() async {
+  Future<void> initPlayerController() async {
     await playerController.preparePlayer(
       path: widget.path,
       shouldExtractWaveform: true,
@@ -60,13 +60,12 @@ class _AudioWaveState extends State<AudioWave> {
         ),
         Expanded(
           child: AudioFileWaveforms(
-            decoration: BoxDecoration(
-            ),
+            decoration: BoxDecoration(),
             playerWaveStyle: PlayerWaveStyle(
               fixedWaveColor: AppPallete.borderColor,
               liveWaveColor: AppPallete.gradient2,
-              spacing: 8, 
-              showSeekLine: false
+              spacing: 8,
+              showSeekLine: false,
             ),
             size: Size(double.infinity, 50),
             playerController: playerController,

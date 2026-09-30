@@ -43,6 +43,9 @@ dependencies:
   flex_color_picker: ^4.0.0
   file_picker: ^13.1.0
   audio_waveforms: ^2.0.2
+  just_audio: ^0.10.6
+  hive_ce: ^2.20.1
+  hive_ce_flutter: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +60,7 @@ dev_dependencies:
   riverpod_generator: ^4.0.9
   riverpod_lint: ^3.1.9
   build_runner: ^2.16.1
+  hive_ce_generator: ^1.11.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

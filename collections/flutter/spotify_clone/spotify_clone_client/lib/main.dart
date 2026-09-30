@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:spotify_clone_client/core/providers/current_user_notifier.dart';
 import 'package:spotify_clone_client/core/theme/app_theme.dart';
 import 'package:spotify_clone_client/features/auth/view/pages/signup.dart';
 import 'package:spotify_clone_client/features/auth/viewmodel/auth_view_model.dart';
 import 'package:spotify_clone_client/features/home/view/pages/home_page.dart';
-import 'package:spotify_clone_client/features/home/view/pages/upload_song_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('hiveSongBox');
   final ProviderContainer container = ProviderContainer();
   await container.read(authViewModelProvider.notifier).initSharedPreferences();
   await container.read(authViewModelProvider.notifier).validateAndGetToken();
@@ -24,7 +26,7 @@ class MyApp extends ConsumerWidget {
     print("Current User: $currentUser");
     return MaterialApp(
       theme: AppTheme.darkThemeMode,
-      home: currentUser != null ? UploadSongPage() : SignUp(),
+      home: currentUser != null ? HomePage() :SignUp(),
     );
   }
 }

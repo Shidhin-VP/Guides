@@ -35,10 +35,10 @@ async def save_song(
         thumbnail_url: str = f"/{id}/images/{thumbnail.filename}"
         newSogn: Song = Song(
             user_id=id,
-            song_url=song_url,
+            song_url=f"{settings.aws_public_bucket_url}{song_url}",
             thumbnail_url=f"{settings.aws_public_bucket_url}{thumbnail_url}",
             artist_name=artist,
-            song_name=song_name,
+            song_name=song_name,  
             color=hex_code,
         )
         s3.upload_fileobj(
@@ -53,7 +53,7 @@ async def save_song(
         db.commit()
         db.refresh(newSogn)
         return SongReturn(
-            song_name=newSogn.song_name, artist=newSogn.artist_name, color=newSogn.color
+            song_name=newSogn.song_name, artist_name=newSogn.artist_name, color=newSogn.color
         )
     except Exception as e:
         print("Error: ", e)
@@ -70,5 +70,5 @@ def get_library(
 ):
     # id: str = mw["id"]
     res = db.execute(select(Song).limit(10))
-    res=res.scalars().all()
+    res=res.scalars().all() 
     return res

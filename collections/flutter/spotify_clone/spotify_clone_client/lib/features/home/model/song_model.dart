@@ -8,6 +8,8 @@
         thumbnail_url:str
 */
 
+import 'dart:convert';
+
 class SongModel {
   String? userID;
   String songURL;
@@ -26,16 +28,48 @@ class SongModel {
     this.songID,
   });
 
+  SongModel copyWith({
+    String? songURL,
+    String? artistName,
+    String? songName,
+    String? thumbnailURL,
+    String? color,
+  }) {
+    return SongModel(
+      songURL: songURL ?? this.songURL,
+      artistName: artistName ?? this.artistName,
+      songName: songName ?? this.songName,
+      thumbnailURL: thumbnailURL ?? this.thumbnailURL,
+      color: color ?? this.color,
+    );
+  }
+
   factory SongModel.fromMap(Map map) {
     return SongModel(
-      songURL: map["song_url"],
-      songName: map["song_name"],
-      artistName: map["artist_name"],
-      thumbnailURL: map["thumbnail_url"],
-      color: map["color"],
-      userID: map["user_id"],
-      songID: map["id"],
+      songURL: map["song_url"] ?? map['songURL'] ?? '',
+      songName: map["song_name"] ?? map['songName'] ?? '',
+      artistName: map["artist_name"] ?? map['artistName'] ?? '',
+      thumbnailURL: map["thumbnail_url"] ?? map['thumbnailURL'] ?? '',
+      color: map["color"] ?? '',
+      userID: map["user_id"] ?? map['userID'] ?? '',
+      songID: map["id"] ?? map['songID'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'userID': userID,
+      'songID': songID,
+      'songURL': songURL,
+      'songName': songName,
+      'artistName': artistName,
+      'thumbnailURL': thumbnailURL,
+      'color': color,
+    };
+  }
+
+  String toJson() {
+    return jsonEncode(toMap());
   }
 
   static List<SongModel> convertToListModel(List res) {
